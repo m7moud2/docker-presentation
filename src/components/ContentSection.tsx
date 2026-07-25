@@ -260,7 +260,7 @@ function BlockView({ block }: { block: Block }) {
 
 export function ContentSection({ section, index }: Props) {
   return (
-    <section className="content-section" id={section.id}>
+    <section className="content-section reveal" id={section.id}>
       <header className="section-head">
         <span className="section-index">الفصل {String(index + 1).padStart(2, '0')}</span>
         <h2>{section.title}</h2>

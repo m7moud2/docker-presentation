@@ -10,16 +10,52 @@ import './App.css'
 
 const quizQuestionCount = quiz.length
 
+type Theme = 'light' | 'dark'
+
+function getInitialTheme(): Theme {
+  if (typeof window === 'undefined') return 'light'
+  const saved = window.localStorage.getItem('theme')
+  if (saved === 'light' || saved === 'dark') return saved
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
 export default function App() {
   const [activeId, setActiveId] = useState(sections[0].id)
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrollPct, setScrollPct] = useState(0)
   const [showTop, setShowTop] = useState(false)
+  const [theme, setTheme] = useState<Theme>(getInitialTheme)
 
   const activeIndex = useMemo(
     () => Math.max(0, navItems.findIndex((n) => n.id === activeId)),
     [activeId],
   )
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    window.localStorage.setItem('theme', theme)
+  }, [theme])
+
+  useEffect(() => {
+    const els = Array.from(document.querySelectorAll<HTMLElement>('.reveal'))
+    if (!('IntersectionObserver' in window)) {
+      els.forEach((el) => el.classList.add('is-visible'))
+      return
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.08 },
+    )
+    els.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     const nodes = navItems
@@ -85,6 +121,15 @@ export default function App() {
             اختبر نفسك
           </button>
           <button
+            type="button"
+            className="theme-toggle"
+            aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
+            title={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
+            onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
+          >
+            {theme === 'dark' ? '☀' : '☾'}
+          </button>
+          <button
             className="menu-btn"
             type="button"
             aria-expanded={menuOpen}
@@ -110,7 +155,7 @@ export default function App() {
             <ContentSection key={section.id} section={section} index={i} />
           ))}
 
-          <section className="content-section quiz-section" id="quiz">
+          <section className="content-section quiz-section reveal" id="quiz">
             <header className="section-head">
               <span className="section-index">اختبار</span>
               <h2>اختبر نفسك — بنك أسئلة بمستويات</h2>

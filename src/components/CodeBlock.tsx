@@ -23,6 +23,11 @@ export function CodeBlock({ code, title, lang }: Props) {
     <div className="code-block">
       <div className="code-toolbar">
         <div className="code-meta">
+          <span className="code-dots" aria-hidden>
+            <span />
+            <span />
+            <span />
+          </span>
           {title && <span className="code-title">{title}</span>}
           {lang && <span className="code-lang">{lang}</span>}
         </div>

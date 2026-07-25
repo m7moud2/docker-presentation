@@ -1,32 +1,105 @@
 :root {
-  --bg: #f3f8fc;
-  --bg-deep: #e7f1f8;
+  /* الخلفيات */
+  --bg: #eef5fb;
+  --bg-deep: #e3eef7;
+
+  /* النص */
   --ink: #0f2a3a;
   --ink-soft: #3d5a6c;
   --muted: #6b8494;
+
+  /* الحدود والأسطح */
   --line: rgba(15, 42, 58, 0.12);
+  --line-strong: rgba(15, 42, 58, 0.2);
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-2: rgba(255, 255, 255, 0.55);
+  --surface-solid: #ffffff;
+  --surface-hover: rgba(6, 147, 227, 0.06);
+
+  /* الهوية */
   --brand: #0693e3;
   --brand-deep: #0a4d68;
   --brand-soft: #d7effc;
-  --code-bg: #0f2430;
+  --accent: #7b5cff;
+  --accent-soft: rgba(123, 92, 255, 0.12);
+
+  /* الأكواد */
+  --code-bg: #0d1f2b;
   --code-ink: #d7ebf5;
+
+  /* حالات */
   --warn: #9a5b12;
   --warn-bg: #fff4e5;
   --tip: #0f6a4c;
   --tip-bg: #e8f7f1;
   --info: #0a4d68;
   --info-bg: #e8f4fb;
-  --shadow: 0 18px 50px rgba(10, 77, 104, 0.08);
+  --danger: #c1121f;
+  --danger-ink: #a01020;
+  --danger-bg: #fdeaec;
+
+  /* ظلال وأشكال */
+  --shadow: 0 14px 40px rgba(10, 77, 104, 0.09);
+  --shadow-lg: 0 26px 60px rgba(10, 77, 104, 0.16);
+  --shadow-brand: 0 14px 30px rgba(6, 147, 227, 0.28);
+  --radius: 16px;
+  --radius-sm: 12px;
+
+  /* خطوط */
   --font: "Cairo", sans-serif;
   --display: "Syne", "Cairo", sans-serif;
   --mono: "JetBrains Mono", ui-monospace, monospace;
-  --sidebar: 280px;
+  --sidebar: 288px;
+
   color: var(--ink);
   background: var(--bg);
   font-family: var(--font);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0a141d;
+  --bg-deep: #0d1a24;
+
+  --ink: #e9f3fa;
+  --ink-soft: #b4c8d5;
+  --muted: #7d97a6;
+
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-2: rgba(255, 255, 255, 0.03);
+  --surface-solid: #13232f;
+  --surface-hover: rgba(56, 182, 255, 0.1);
+
+  --brand: #38b6ff;
+  --brand-deep: #8ad6f5;
+  --brand-soft: rgba(56, 182, 255, 0.16);
+  --accent: #9d84ff;
+  --accent-soft: rgba(157, 132, 255, 0.16);
+
+  --code-bg: #060f16;
+  --code-ink: #d7ebf5;
+
+  --warn: #f0b458;
+  --warn-bg: rgba(240, 180, 88, 0.14);
+  --tip: #4bd0a7;
+  --tip-bg: rgba(43, 157, 143, 0.16);
+  --info: #8ad6f5;
+  --info-bg: rgba(56, 182, 255, 0.12);
+  --danger: #ff6b78;
+  --danger-ink: #ff8a94;
+  --danger-bg: rgba(193, 18, 31, 0.16);
+
+  --shadow: 0 16px 44px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 30px 70px rgba(0, 0, 0, 0.55);
+  --shadow-brand: 0 14px 34px rgba(56, 182, 255, 0.28);
+
+  color-scheme: dark;
 }
 
 *,
@@ -45,6 +118,7 @@ body {
   min-height: 100vh;
   background: var(--bg);
   color: var(--ink);
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 button,
@@ -57,5 +131,35 @@ a {
 }
 
 ::selection {
-  background: rgba(6, 147, 227, 0.22);
+  background: rgba(6, 147, 227, 0.24);
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+  background-clip: content-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
