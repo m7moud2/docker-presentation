@@ -9,6 +9,7 @@ type Props = {
 
 export const navItems = [
   ...sections.map((s) => ({ id: s.id, nav: s.nav })),
+  { id: 'senior-prep', nav: 'أسئلة السينيور' },
   { id: 'quiz', nav: 'اختبر نفسك' },
 ]
 
@@ -27,12 +28,12 @@ export function Sidebar({ open, activeId, onNavigate, onClose }: Props) {
             key={item.id}
             type="button"
             className={`nav-item ${activeId === item.id ? 'is-active' : ''} ${
-              item.id === 'quiz' ? 'nav-quiz' : ''
+              item.id === 'quiz' || item.id === 'senior-prep' ? 'nav-quiz' : ''
             }`}
             onClick={() => onNavigate(item.id)}
           >
             <span className="nav-index">
-              {item.id === 'quiz' ? '★' : String(i + 1).padStart(2, '0')}
+              {item.id === 'quiz' ? '★' : item.id === 'senior-prep' ? '◆' : String(i + 1).padStart(2, '0')}
             </span>
             <span>{item.nav}</span>
           </button>

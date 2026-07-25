@@ -5,10 +5,13 @@ import { Hero } from './components/Hero'
 import { Sidebar, navItems } from './components/Sidebar'
 import { ContentSection } from './components/ContentSection'
 import { Quiz } from './components/Quiz'
+import { SeniorPrep } from './components/SeniorPrep'
 import { quiz } from './data/quiz'
+import { seniorPrep } from './data/senior-prep'
 import './App.css'
 
 const quizQuestionCount = quiz.length
+const prepCount = seniorPrep.length
 
 type Theme = 'light' | 'dark'
 
@@ -51,7 +54,7 @@ export default function App() {
           }
         })
       },
-      { rootMargin: '0px 0px -12% 0px', threshold: 0.08 },
+      { rootMargin: '0px 0px -80px 0px', threshold: 0 },
     )
     els.forEach((el) => observer.observe(el))
     return () => observer.disconnect()
@@ -154,6 +157,21 @@ export default function App() {
           {sections.map((section, i) => (
             <ContentSection key={section.id} section={section} index={i} />
           ))}
+
+          <section className="content-section prep-section reveal" id="senior-prep">
+            <header className="section-head">
+              <span className="section-index">تحضير الإنترفيو</span>
+              <h2>أسئلة السينيور المتوقّعة — وأنت جاهز للرد</h2>
+              <p className="section-lead">
+                {prepCount} سؤال بصياغة واقعية زي ما بتتسأل. لكل سؤال: نيّة السينيور من ورا السؤال،
+                جواب عربي بمصطلحات إنجليزية تقنية، جملة إنجليزية جاهزة تقولها، الفخ اللي تتجنبه،
+                والسؤال اللي هييجي بعده.
+              </p>
+            </header>
+            <div className="section-body prep-body">
+              <SeniorPrep />
+            </div>
+          </section>
 
           <section className="content-section quiz-section reveal" id="quiz">
             <header className="section-head">
